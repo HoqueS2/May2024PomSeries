@@ -1,0 +1,46 @@
+Reporting: Extend Report
+		  pom.xml ---> add dependencies --->  extentreports  <----
+		  
+src/main/java ---> create package: qa.com.opencart.listerners
+			---> create class : ExtentReportListener.java
+								----> method : you can uncomment if you don't want any screen shot for passed TC
+								
+		
+  			---> create class: AnnotationTransformer.java for screenshot
+  			--> create class: Retry.java for retry to the failed test case
+  			
+Listerners are come from testNG. Once you start executing TC Listerners will activated and keep start lisening to you TC then creat report.
+
+
+ScreenShot : add one Listerners in the testng_regresion.xml file
+		   : In DriverFactory.java create one method getScreenShot()
+		   : Interface --> [(TakesScreenshot) getDriver()]  ---> converted your getDriver to TakesScreenshot interface
+		    then change source file to path file. file to file exchange
+		   : create one folder in project level --> screenShot folder
+		    
+		    
+Report: Refresh the project ---> report folder --> right click --> properties --> copy path --> paste in browser 
+Screen Shot: go to screenshot folder and click
+
+
+Retry: ---> create class: AnnotationTransformer.java for screenshot
+  	   --> create class: Retry.java for retry to the failed test case
+  	   --> add listeners to testNG.xml
+  	   
+Note: Incase you want to run TC from test class then you won't get any report, screenshot and retry service.
+Solution: on the test class level add liseners annotation look at LoginPageTest.java class 
+
+
+Failure Test Cases: refresh the project --> test output folder --> testng_failed.xml --> you can run your failed tc from there
+
+Soft Assert: in case if you want to use data provider and set your negative data first then positive data soft assert has some issue as we 
+			create the soft assert object in base class. first its go to base class with negative data and status become false then when it get
+			positive data it couldn't change the status so our positive tc got failed even with right data.
+			
+Solution: create the soft assert object in locally method level instead of BaseTest class level.
+		ProductInfoPageTest.java ---> myData() data provider --> productInfoTest()
+		Remove soft assert from Base class
+
+
+
+
