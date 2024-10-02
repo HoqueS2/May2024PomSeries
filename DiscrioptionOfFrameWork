@@ -1,46 +1,62 @@
-Reporting: Extend Report
-		  pom.xml ---> add dependencies --->  extentreports  <----
-		  
-src/main/java ---> create package: qa.com.opencart.listerners
-			---> create class : ExtentReportListener.java
-								----> method : you can uncomment if you don't want any screen shot for passed TC
-								
+Git :
+
+create git branch --------> 
+							git branch  // now poiting on master
+							git branch demopage  // creating brunch from master 
+							git branch    // check how many bruch you create still pointing to master
+							git checkout demopage  // pointing to demopage brunch now 
+							git brunch 
+							
+							
+Go to your project click on (close project) then open it again.
+Now next to your project you will see the branch name .
+If you want to got to master then follow the same process ----> : git checkout master
+
+
+Project -----> create one page called Demopage.java in my demopage brunch
+
+Git:
+
+		git status // check current status. You will see the untracked file. you have to add then commit the file
+		git add (paste untracked file)   // will tracked the file
+		git commit -m "Added DemoPage"   // will commit the file
 		
-  			---> create class: AnnotationTransformer.java for screenshot
-  			--> create class: Retry.java for retry to the failed test case
-  			
-Listerners are come from testNG. Once you start executing TC Listerners will activated and keep start lisening to you TC then creat report.
+		
+Pushed the code on remote site: This time we will push it on demopage brunch which will by default created on remote site. we will not push in on master site
 
 
-ScreenShot : add one Listerners in the testng_regresion.xml file
-		   : In DriverFactory.java create one method getScreenShot()
-		   : Interface --> [(TakesScreenshot) getDriver()]  ---> converted your getDriver to TakesScreenshot interface
-		    then change source file to path file. file to file exchange
-		   : create one folder in project level --> screenShot folder
-		    
-		    
-Report: Refresh the project ---> report folder --> right click --> properties --> copy path --> paste in browser 
-Screen Shot: go to screenshot folder and click
+		git push origin demopage  // will create a demopage bruch on remote site.  * [new branch]      demopage -> demopage
+		
+		
+Git account refesh you will see one demopage brunch is created and new code is reflected there. But in master no new code is reflected.
+Because my remote master is lagging .
 
+PR: now we have to raise a PR ----->
+							go to pull request tab
+							new pull request
+							click on compare main: and select demopage  [ main  <---- demopage ]
+							create pull request
+							compleate form and select reviewer and click create pull request
+							
+							
+In case PR rejected then go back to your project and fixed it then again --->
 
-Retry: ---> create class: AnnotationTransformer.java for screenshot
-  	   --> create class: Retry.java for retry to the failed test case
-  	   --> add listeners to testNG.xml
-  	   
-Note: Incase you want to run TC from test class then you won't get any report, screenshot and retry service.
-Solution: on the test class level add liseners annotation look at LoginPageTest.java class 
+				git status // check current status. You will see the untracked file. you have to add then commit the file
+				git add (paste untracked file)   // will tracked the file
+				git commit -m "Fixed DemoPage issue"   // will commit the file
+				git push origin demopage
+				
+				
+In case PR approved : depend on project to project who marge the code with master
 
-
-Failure Test Cases: refresh the project --> test output folder --> testng_failed.xml --> you can run your failed tc from there
-
-Soft Assert: in case if you want to use data provider and set your negative data first then positive data soft assert has some issue as we 
-			create the soft assert object in base class. first its go to base class with negative data and status become false then when it get
-			positive data it couldn't change the status so our positive tc got failed even with right data.
-			
-Solution: create the soft assert object in locally method level instead of BaseTest class level.
-		ProductInfoPageTest.java ---> myData() data provider --> productInfoTest()
-		Remove soft assert from Base class
-
-
-
-
+					Put some commect then click marge request click confirm marge , sign is also change. Now new code will apper in master
+					In remote marge we don't need any git command from terminal. Now master get updaetd after marge with demopage in remote site
+					now we have to do a latest pull from remote to local.
+					
+First change to demopage brunch  to master brunch:
+													git branch         // now poiting to demopage
+													git checkout main  // pointing to master now 
+													git brunch 
+					
+Pull the master from remote to local:
+												git pull origin main		
