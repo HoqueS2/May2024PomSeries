@@ -30,6 +30,40 @@ Pushed the code on remote site: This time we will push it on demopage brunch whi
 		
 Git account refesh you will see one demopage brunch is created and new code is reflected there. But in master no new code is reflected.
 Because my remote master is lagging .
+<<<<<<< HEAD
+=======
+
+PR: now we have to raise a PR ----->
+							go to pull request tab
+							new pull request
+							click on compare main: and select demopage  [ main  <---- demopage ]
+							create pull request
+							compleate form and select reviewer and click create pull request
+							
+							
+In case PR rejected then go back to your project and fixed it then again --->
+
+				git status // check current status. You will see the untracked file. you have to add then commit the file
+				git add (paste untracked file)   // will tracked the file
+				git commit -m "Fixed DemoPage issue"   // will commit the file
+				git push origin demopage
+				
+				
+In case PR approved : depend on project to project who marge the code with master
+
+					Put some commect then click marge request click confirm marge , sign is also change. Now new code will apper in master
+					In remote marge we don't need any git command from terminal.
+					
+start at 00:49;00   now change to dp to master
+					
+		
+
+							
+
+
+
+
+>>>>>>> a751fcd96589848b3cf00bc7571d1ad1d3bb6ba5
 
 PR: now we have to raise a PR ----->
 							go to pull request tab
