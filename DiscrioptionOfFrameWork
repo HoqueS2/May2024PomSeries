@@ -93,4 +93,12 @@ First change to demopage brunch  to master brunch:
 													git brunch 
 					
 Pull the master from remote to local:
-												git pull origin main		
+												git pull origin main	
+
+
+
+
+
+Marge Local to Local : I work on account page meanwhile master got updated with other qa member code in remote site in that case i have to 
+take a latest pull then magre with my acc page code [ local to local marge] master to accPage feature. Go to git account create one new file 
+in master 
