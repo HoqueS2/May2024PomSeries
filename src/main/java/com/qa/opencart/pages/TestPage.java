@@ -2,7 +2,7 @@ package com.qa.opencart.pages;
 
 import org.openqa.selenium.By;
 
-public class TestPage.java {
+public class TestPage {
 	
 	By name = By.id("klo");
 	
