@@ -121,3 +121,99 @@ Now marge with master
 : git merge main
 
 	
+	
+//----------------------------------------------------------------------------------------------------------
+//============================================ git conflict and other commend ==============================================================
+
+
+git switch = git checkout
+
+If you want to see how many commit you made
+: git log
+
+For short log history
+: git log —oneline
+
+
+For last 3 commit
+: git log -3
+
+For checkin specific author commit
+: git log —author=“Naveen Automation”
+: git log —author=“Sharon Hoque”
+
+
+For specific date log
+: git log —after=“2024-10-1”
+: git log —before=“2024-10-1”
+
+For history of each line code with author and particular file
+: git blame (file path)
+
+Commit wise give me developer name
+: git shortlog
+
+Show specific history of commit
+: git log —oneline
+: git show commitID
+
+
+For latest commit
+: git show HEAD
+
+For get history of in-between commit
+: git log 78ba345..37c9c19
+
+
+To delate the brunch in local
+: git branch —delete AP(branch name)
+
+
+To delate the brunch in Remote
+: git push -d origin  DemoPage(branch name)
+
+To see local branch
+: git branch
+
+To see remote branch
+: git branch -r
+
+For Tags in the git (00:25:00)
+From a specific tags I want to release a version
+Tags —> create a Version 
+
+
+Conflict: (00:36:00)
+Create a class —> AppLogin.java
+Same time other qa member create same class with same method—> 
+* Go to remote site and create one file with other qa member name. And she already add, commit , push , pr, and marge the code in remote master
+* My work is not complete yet and meanwhile I got notification that remote site got updated
+* Now I have to take a latest pull form remote
+* : git pull origin main —-> you got error cz from your local you have some untracked file 
+* : git add file
+* : git commit -m “added AppLogin page”
+* So here I already save the file in local and stage
+* Now I want to pull the latest remote master
+* : git pull origin main
+* Git Asking why you need to merge explain
+* Press i (enabled insert mode) —> taking latest pull from remote
+* Press escape——> insert mode is gone
+* :wq!  —> to save the message
+* Refresh the project then you will see latest pull successful because there is no conflict , both qa guys write the same code and method 
+* 2nd scenerio —> bena code is different from my code
+* Change code in remote site which bena is push
+* Now from your site you do the latest pull and give the explanation
+* Refresh the project —> you see bena code is updated. Conflict not happen cz class name and method name is still same
+* 3rd scenerio
+* In your local change your AppLogin page code add some new method 
+* Add, commit, no push
+* Bena also change code this time our code is not same  and merge to master
+* Now you try to pull and git says “conflict
+* In that scenario we don’t have any command to resolve the issue
+* So me and bena need to communicate to solve the issue then manually we have to solve it 
+* In local In the same file I have my code and bena code with some sign like ======== or  >>>>>>>>> or some number of bena code 
+* After communicate we decide which code is right then we decide which code need to delete
+* From my local I start update my code and remove all the conflict sign 
+* Add, commit, push  now my code is in the remote site
+* Now bena need to delete manually her code from her local 
+
