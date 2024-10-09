@@ -217,3 +217,25 @@ Same time other qa member create same class with same method—>
 * Add, commit, push  now my code is in the remote site
 * Now bena need to delete manually her code from her local 
 
+//--=======================================  clone , fork, revert back, reset ===============================================
+
+Clone:
+
+Office will provide a Git URL :
+ https://github.com/naveenanimation20/LatestCucumber6WithPOM
+
+* Find a eclipse folder —> go to any project right click—> properties—> click on path ——> land on eclipse workplace 
+* Create new folder here in eclipse workplace [CucumberFWNaveen]
+* Open terminal and go to that folder directory.
+* : cd eclipse-workspace
+* : ls
+* : cd CucumberFWNaveen
+* : git clone https://github.com/naveenanimation20/LatestCucumber6WithPOM
+* After git clone paste git repo url provide from your work
+* Now project is available in my laptop. I have to import in eclipse
+* Eclipse —> file —>import —> Projects from folder or archive—>next —> directory—> finish
+* 
+* 
+
+
+
