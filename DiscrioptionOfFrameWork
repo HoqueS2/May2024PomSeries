@@ -234,8 +234,20 @@ Office will provide a Git URL :
 * After git clone paste git repo url provide from your work
 * Now project is available in my laptop. I have to import in eclipse
 * Eclipse —> file —>import —> Projects from folder or archive—>next —> directory—> finish
+* For more info checout hand note
 * 
-* 
+===============================================================================================================================
+In case you edit or make change lots of file then you can add them everything together
+: git add .
 
 
+
+
+
+
+
+
+
+
+ 
 
