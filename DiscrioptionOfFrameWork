@@ -241,7 +241,28 @@ In case you edit or make change lots of file then you can add them everything to
 : git add .
 
 
+================================================== Jenkins ==================================================================
 
+Jenkins:
+
+Terminal —> ls —> cd Downloads —> ls —> java -jar jenkins.war
+
+* Now server will start running. Open it in your browser.
+* Now Jenkins use only java 17 not 11
+* You can keep java 11 in your local machine for selenium automation purpose but for Jenkins you have to use java 17.
+* Manage jenkins—> tools —> maven choose latest version
+* Java —> terminal : echo $JAVA_HOME enter copy path and paste in jenkins
+* 
+Plugins :
+
+Available plugins —> testing
+
+
+Create New Job In Jenkins——>  video POM_15 time 25:00
+Dashboard —> new item —> May2024PomSeries—> select maven project —> ok
+Give description —> git url —> git url repo —> brunch: main
+Build: maven —> pom.xml —> clean install
+Add post build action: —> publish TestNg Result ==> Allure Report —> publish HTML report
 
 
 
