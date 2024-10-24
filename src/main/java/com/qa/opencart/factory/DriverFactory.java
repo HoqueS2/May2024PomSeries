@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Properties;
 
 import org.openqa.selenium.OutputType;
@@ -14,23 +16,28 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.io.FileHandler;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
 import com.qa.opencart.errors.AppError;
 import com.qa.opencart.exceptions.BrowserException;
 import com.qa.opencart.exceptions.FrameworkException;
 
+import io.qameta.allure.Step;
+
 
 
 
 public class DriverFactory {
+	
 	WebDriver driver;
 	Properties prop;
-	
+
 	public static String isHighlight;
-	
+
 	public static ThreadLocal<WebDriver> tlDriver = new ThreadLocal<WebDriver>();
-	
+
+	OptionsManager optionsManager;
 
 	/**
 	 * This method is used to init the driver on the basis of given browsername.
@@ -38,30 +45,46 @@ public class DriverFactory {
 	 * @param browserName
 	 * @return it returns driver
 	 */
+	@Step("initializing the driver with properties: {0}")
 	public WebDriver initDriver(Properties prop) {
 
 		String browserName = prop.getProperty("browser");
 		System.out.println("browser name is : " + browserName);
-		
+
 		isHighlight = prop.getProperty("highlight");
-		
-		OptionsManager optionsManager = new OptionsManager(prop);
+
+		optionsManager = new OptionsManager(prop);
 
 		switch (browserName.toLowerCase().trim()) {
 		case "chrome":
-			//driver = new ChromeDriver(optionsManager.getChromeOptions());
-			tlDriver.set(new ChromeDriver(optionsManager.getChromeOptions()));
+			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
+				// run tcs on remote/container:
+				init_remoteDriver("chrome");
+			} else {
+				// run tcs in local:
+				tlDriver.set(new ChromeDriver(optionsManager.getChromeOptions()));
+			}
 			break;
 		case "firefox":
-			//driver = new FirefoxDriver(optionsManager.getFirefoxOptions());
-			tlDriver.set(new FirefoxDriver(optionsManager.getFirefoxOptions()));
+			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
+				// run tcs on remote/container:
+				init_remoteDriver("firefox");
+			} else {
+				// run tcs in local:
+				tlDriver.set(new FirefoxDriver(optionsManager.getFirefoxOptions()));
+			}
 			break;
 		case "edge":
-			//driver = new EdgeDriver(optionsManager.getEdgeOptions());
-			tlDriver.set(new EdgeDriver(optionsManager.getEdgeOptions()));
+			if (Boolean.parseBoolean(prop.getProperty("remote"))) {
+				// run tcs on remote/container:
+				init_remoteDriver("edge");
+			} else {
+				// run tcs in local:
+				tlDriver.set(new EdgeDriver(optionsManager.getEdgeOptions()));
+			}
 			break;
+
 		case "safari":
-			//driver = new SafariDriver();
 			tlDriver.set(new SafariDriver());
 			break;
 
@@ -77,20 +100,44 @@ public class DriverFactory {
 		return getDriver();
 
 	}
-	
+
+	private void init_remoteDriver(String browserName) {
+		System.out.println("running tests on grid with browser : " + browserName);
+
+		try {
+
+			switch (browserName.toLowerCase().trim()) {
+			case "chrome":
+				tlDriver.set(
+						new RemoteWebDriver(new URL(prop.getProperty("huburl")), optionsManager.getChromeOptions()));
+				break;
+			case "firefox":
+				tlDriver.set(
+						new RemoteWebDriver(new URL(prop.getProperty("huburl")), optionsManager.getFirefoxOptions()));
+				break;
+			case "edge":
+				tlDriver.set(new RemoteWebDriver(new URL(prop.getProperty("huburl")), optionsManager.getEdgeOptions()));
+				break;
+
+			default:
+				System.out.println("please pass the right remote browser name....");
+				throw new BrowserException(AppError.INVALID_BROWSER_MESG);
+			}
+
+		} catch (MalformedURLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
 	/**
 	 * this method is returning the driver with threadlocal
-	 * ThreadLocal has 2 method one is set and second one ig get()
-	 * Here we get the threadLocal Driver and retuen the webDriver
-	 * this method is static in nature so that i call this method directly from this class
-	 * insted of[ driver.manage().window().maximize();]
-	 * I can use ThreadLical Driver [ getDriver().manage().window().maximize();]
+	 * 
 	 * @return
 	 */
 	public static WebDriver getDriver() {
 		return tlDriver.get();
 	}
-	
 
 	/**
 	 * this method is used to init the properties from the config file
@@ -144,15 +191,15 @@ public class DriverFactory {
 
 		return prop;
 	}
-	
-	
+
 	/**
-	 * take screenshot 
+	 * take screenshot
 	 */
-	
+
 	public static String getScreenshot(String methodName) {
-		File srcFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);//temp dir
-		String path = System.getProperty("user.dir") + "/screenshot/" + methodName + "_" + System.currentTimeMillis()+ ".png";
+		File srcFile = ((TakesScreenshot) getDriver()).getScreenshotAs(OutputType.FILE);// temp dir
+		String path = System.getProperty("user.dir") + "/screenshot/" + methodName + "_" + System.currentTimeMillis()
+				+ ".png";
 		File destination = new File(path);
 		try {
 			FileHandler.copy(srcFile, destination);

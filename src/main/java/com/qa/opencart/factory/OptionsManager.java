@@ -1,5 +1,7 @@
 package com.qa.opencart.factory;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -7,19 +9,15 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
 public class OptionsManager {
-	// Declare all the browser reference variable
 	private Properties prop;
 	private ChromeOptions co;
 	private FirefoxOptions fo;
 	private EdgeOptions eo;
-	
-	//create construction with Property reference variable
+
 	public OptionsManager(Properties prop) {
 		this.prop = prop;
 	}
-	
-	// this method is responsible for browser Headless/Incognito option 
-	// create the ChromeOptions obj then use addArguments() method for Headless/Incognito option 
+
 	public ChromeOptions getChromeOptions() {
 		co = new ChromeOptions();
 		if (Boolean.parseBoolean(prop.getProperty("headless"))) {
@@ -29,6 +27,18 @@ public class OptionsManager {
 		if (Boolean.parseBoolean(prop.getProperty("incognito"))) {
 			co.addArguments("--incognito");
 		}
+
+		if (Boolean.parseBoolean(prop.getProperty("remote"))) {
+			co.setCapability("browserName", "chrome");
+			co.setBrowserVersion(prop.getProperty("browserversion").trim());
+
+			Map<String, Object> selenoidOptions = new HashMap<>();
+			selenoidOptions.put("screenResolution", "1280x1024x24");
+			selenoidOptions.put("enableVNC", true);
+			selenoidOptions.put("name", prop.getProperty("testname"));
+			co.setCapability("selenoid:options", selenoidOptions);
+		}
+
 		return co;
 	}
 
@@ -41,6 +51,16 @@ public class OptionsManager {
 		if (Boolean.parseBoolean(prop.getProperty("incognito"))) {
 			fo.addArguments("--incognito");
 		}
+		if (Boolean.parseBoolean(prop.getProperty("remote"))) {
+			fo.setCapability("browserName", "firefox");
+			fo.setBrowserVersion(prop.getProperty("browserversion").trim());
+
+			Map<String, Object> selenoidOptions = new HashMap<>();
+			selenoidOptions.put("screenResolution", "1280x1024x24");
+			selenoidOptions.put("enableVNC", true);
+			selenoidOptions.put("name", prop.getProperty("testname"));
+			fo.setCapability("selenoid:options", selenoidOptions);
+		}
 		return fo;
 	}
 
@@ -52,6 +72,9 @@ public class OptionsManager {
 		}
 		if (Boolean.parseBoolean(prop.getProperty("incognito"))) {
 			eo.addArguments("--inPrivate");
+		}
+		if (Boolean.parseBoolean(prop.getProperty("remote"))) {
+			eo.setCapability("browserName", "edge");
 		}
 		return eo;
 	}

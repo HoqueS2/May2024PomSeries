@@ -1,5 +1,6 @@
 package com.qa.opencart.tests;
 
+
 import java.util.Map;
 
 import org.testng.Assert;
@@ -24,36 +25,12 @@ public class ProductInfoPageTest extends BaseTest{
 		productInfoPage = resultsPage.selectProduct("MacBook Pro");
 		Assert.assertEquals(productInfoPage.getProductHeader(), "MacBook Pro");
 	}
-	
-	@DataProvider
-	public Object[][] myData() {
-		return new Object[][] {
-			{"macbook", "MacBook Air", "700"},  // right data
-			{"macbook", "MacBook Pro", "801"},  // wrong data  ---> this data will failed the tc 
-			{"macbook", "MacBook Air", "700"}
-		};
-	}
-	
-	@Test(dataProvider = "myData")
-	public void productInfoTest1(String serachKey, String productName, String rewardsPoints) {
 		
-		SoftAssert softAssert = new SoftAssert();
-		resultsPage = accPage.doSearch(serachKey);
-		productInfoPage = resultsPage.selectProduct(productName);
-		Map<String, String> actProductDataMap = productInfoPage.getProductData();
-		
-//		softAssert.assertEquals(actProductDataMap.get("Brand"), "Apple");
-//		softAssert.assertEquals(actProductDataMap.get("Product Code"), "Product 18");
-		softAssert.assertEquals(actProductDataMap.get("Reward Points"), rewardsPoints);
-//		softAssert.assertEquals(actProductDataMap.get("Availability"), "In Stock");
-//		softAssert.assertEquals(actProductDataMap.get("productprice"), "$2,000.00");
-//		softAssert.assertEquals(actProductDataMap.get("extaxprice"), "$2,000.00");
-		softAssert.assertAll();
-	}
-	
 	
 	@Test
 	public void productInfoTest() {
+		
+		SoftAssert softAssert = new SoftAssert();
 		resultsPage = accPage.doSearch("macbook");
 		productInfoPage = resultsPage.selectProduct("MacBook Pro");
 		Map<String, String> actProductDataMap = productInfoPage.getProductData();
